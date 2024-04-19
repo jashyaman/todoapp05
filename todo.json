@@ -1,0 +1,44 @@
+[
+    {
+        "user" : {
+            "userId" : "Shyam"
+        },
+        "group" : {
+            "name" : "Grocery List"
+        },
+        "list" : [
+            {
+                "title" : "Potatos 10lb bag"
+            },
+            {"title":"Carrots 3lb bag"},{"title":"Apples 3lb bag"},{"title":"Oranges 1lb bag"},{"title":"Tomatoes 4lb bag"},{"title":"Celery 4lb bag"},{"title":"Tomatoes 4lb bag"},{"title":"Beets 4lb bag"},{"title":"Carrots 4lb bag"},{"title":"Tomatoes 3lb bag"},{"title":"Carrots 1lb bag"}
+        ]
+    },
+    {
+        "user" : {
+            "userId" : "Shyam"
+        },
+        "group": {
+            "name" : "Household Chores"
+        },
+        "list" : [
+            {
+                "title" : "Iron clothes"
+            },
+            {
+                "title" : "vacuum floor"
+            },
+            {
+                "title" : "load the dishwasher"
+            },
+            {
+                "title" : "take out the trash"
+            },
+            {
+                "title" : "fold clothes"
+            },
+            {
+                "title" : "do laundry"
+            }
+        ]
+    }
+]

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+    <head>
+        <title>Todo App 05</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                padding: 5px;
+            }
+            .header {
+                border-style: double;
+                border-width: thick;
+                display: inline-flex;
+                width: 100%;
+            }
+            .todotitle {
+                font-size: 20px;
+                font-weight: bold;
+                width: 98%;
+                border: 1px solid red;
+            }
+            .loggedindetail {
+                text-align: center;
+                font-size: 10px;
+                width: auto;
+            }
+            .todobody {
+                font-size: 15px;
+            }
+            .group1 {
+                margin-top: 10px;
+                color:black;
+            }
+            .grouptitle {
+                border: 2px solid;
+                font-weight: bold;
+                width: fit-content;
+                padding: 5px;
+            }
+            .todoitem {
+                display: flex;
+                flex-direction: row;
+                margin-top: 5px;
+                padding: 5px;
+                max-width: 350px;
+            }
+            .todoitem:hover {
+                background-color: #e7e7e7;
+            }
+            .todoitemtext {
+                padding: 5px;
+                cursor: default;
+                width:250px;
+                max-width:250px;
+            }
+            .edittodo {
+                padding: 5px;
+                background-color: #e7e7e7;
+                border: 1px solid black;
+                cursor: pointer;
+            }
+            .deletetodo {
+                margin-left: 5px;
+                padding: 5px;
+                background-color: #f44336;
+                color: white;
+                border: 1px solid black;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div class="todotitle">Todo list application</div>
+            <div class="loggedindetail" id="userId">Shyam</div>
+        </div>
+        <div class="todobody" id="todobody">
+            <div class="group1">
+                <div class="grouptitle">Grocery List</div>
+                <div class="todoitem">
+                    <div class="todoitemtext">
+                        Potatos 10lb bag
+                    </div>
+                    <div class="edittodo">
+                        edit
+                    </div>
+                    <div class="deletetodo">
+                        delete
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="demo">
+
+        </div>
+
+        <script>
+            var xhttp = new XMLHttpRequest();
+            xhttp.overrideMimeType("application/json");
+            xhttp.onreadystatechange = function() {
+                if(this.readyState == 4 && this.status == 200) {
+                    var htmlStr = "";
+                    var jsonStr = xhttp.responseText;
+                    var jsonArr = JSON.parse(jsonStr);
+                    var userId = document.getElementById("userId").innerHTML;
+                    // console.log("currently logged in user " + userId);
+                    let dataArr = [];
+                    for(let i=0;i<jsonArr.length;i++) {
+                        let userIdStr = jsonArr[i]["user"]["userId"];
+                        let groupIdStr = jsonArr[i]["group"]["name"];
+                        let listArr = jsonArr[i]["list"];
+                        if(userIdStr != userId) continue;
+                        let index = dataArr.map(elem => elem["group"]).indexOf(groupIdStr);
+                        if(index == -1) {
+                            dataArr.push({
+                                "group" : groupIdStr,
+                                "list" : listArr
+                            });
+                        } else {
+                            dataArr[index]["list"] = dataArr[index][list].concat(listArr);
+                        }
+                    }
+                    for(let k=0;k<dataArr.length;k++) {
+                        debugger;
+                        htmlStr+='<div class="group'+(k+1)+'">';
+                        htmlStr+='<div class="grouptitle">'+dataArr[k]["group"]+'</div>';
+                        
+                        for(let h=0;h<dataArr[k]["list"].length;h++) {
+                            htmlStr+='<div class="todoitem">';
+                            htmlStr+='<div class="todoitemtext">'+dataArr[k]["list"][h]["title"]+'</div>';
+                            htmlStr+='<div class="edittodo" id="edit-'+(k+1)+'-'+(h+1)+'">edit</div>';
+                            htmlStr+='<div class="deletetodo" id="delete-'+(k+1)+'-'+(h+1)+'">delete</div>';
+                            htmlStr+='</div>';
+                        }
+                        htmlStr+='</div>';
+                        htmlStr+='</div>'; 
+                    }
+                    // console.log(htmlStr);
+                    document.getElementById("todobody").innerHTML = htmlStr;
+                }
+            };
+            xhttp.open("GET", "todo.json", true);
+            xhttp.send();
+
+        </script>
+    </body>
+</html>
